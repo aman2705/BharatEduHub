@@ -2,8 +2,9 @@ package com.example.BharatEduHub.Controllers;
 
 import com.example.BharatEduHub.Models.CustomMessage;
 import com.example.BharatEduHub.Models.Modules;
-import com.example.BharatEduHub.Models.Users;
 import com.example.BharatEduHub.Service.ModuleService;
+import com.example.BharatEduHub.dto.CreateModuleDTO;
+import com.example.BharatEduHub.dto.ModuleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,20 +20,20 @@ public class ModuleController {
     ModuleService moduleService;
 
     @PostMapping("/api/modules")
-    private ResponseEntity<CustomMessage> addmodule(@RequestBody Modules modules){
-        moduleService.add_module(modules);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomMessage("Added Successfully!"));
+    private ResponseEntity<ModuleDTO> addmodule(@RequestBody CreateModuleDTO createModuleDTO){
+        Modules module = moduleService.createModule(createModuleDTO);
+        ModuleDTO dto = moduleService.convertToDTO(module);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @DeleteMapping("/api/modules/{module_id}")
-    public ResponseEntity<CustomMessage> delete(@PathVariable Integer module_id){
-        moduleService.delete(module_id);
-        return ResponseEntity.status(HttpStatus.OK).body(new CustomMessage("Deleted Successfully!"));
+    public ResponseEntity<Void> delete(@PathVariable Integer module_id){
+        boolean success = moduleService.deleteModuleById(module_id);
+        if (success) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PutMapping("/api/modules/{module_id}/sequence")
-    public ResponseEntity<Modules> update(@PathVariable Integer module_id,@RequestBody Modules updated){
-        Modules newmodule=moduleService.update(module_id,updated);
-        return ResponseEntity.status(HttpStatus.OK).body(newmodule);
-    }
 }

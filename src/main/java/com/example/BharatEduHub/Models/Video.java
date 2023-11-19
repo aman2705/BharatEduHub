@@ -3,15 +3,14 @@ package com.example.BharatEduHub.Models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 @Entity
 @Data
 @Table(name="VIDEO")
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class Video {
 
     @Id

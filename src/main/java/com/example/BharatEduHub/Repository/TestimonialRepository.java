@@ -1,6 +1,7 @@
 package com.example.BharatEduHub.Repository;
 
-import com.example.BharatEduHub.Models.Testimonial.Testimonial;
+
+import com.example.BharatEduHub.Models.Testimonial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
